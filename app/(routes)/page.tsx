@@ -9,7 +9,9 @@ export const revalidate = 0;
 
 const HomePage = async () => {
 const products = await getProducts({isFeatured: true});
-const billboard = await getBillboard("235e6326-39cd-4c91-a4f2-e3d6a0ca5589");
+
+// Fix api auth -> need to check if the api call is coming from the correct store 
+const billboard = await getBillboard("5907416b-ab00-4bc3-8795-eedc90689368");
   return (
     <Container>
         <div className='space-y-10 pb-10'>
