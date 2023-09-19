@@ -1,11 +1,12 @@
 "use client"
-
+import {MouseEventHandler} from "react"
 import { Product } from "@/public/types"
 import Image from "next/image";
 import IconButton from "./icon-button";
 import { Expand, ShoppingCart } from "lucide-react";
 import Currency from "./currency";
 import { useRouter } from "next/navigation";
+import usePreviewModal from "@/hooks/use-preview-modal";
 
 interface ProductCard { 
     data: Product;
@@ -14,10 +15,18 @@ interface ProductCard {
 
 const ProductCard: React.FC<ProductCard> = ({data}) => {
   const router = useRouter();
+  const previewModal = usePreviewModal(); 
+
   const handleClick = () => {
     // In Future change this to data?.name
     // This could help with SEO as the product name is in the url slug
     router.push(`/product/${data?.id}`);
+  }
+
+  const onPreview: MouseEventHandler<HTMLButtonElement> = (event) => {
+    // stop propagation overrides main divs on click event 
+    event.stopPropagation(); 
+    previewModal.onOpen(data)
   }
   return (
     <div onClick={handleClick} className="bg-white group cursor-pointer rounded-xl border p-3 space-y-4">
@@ -27,7 +36,7 @@ const ProductCard: React.FC<ProductCard> = ({data}) => {
 
         <div className="opacity-0 group-hover:opacity-100 transition absolute w-full px-6 bottom-5">
             <div className="flex gap-x-6 justify-center">
-                <IconButton onClick={() =>{}} icon={<Expand size={20} className="text-gray-600"/>}/>
+                <IconButton onClick={onPreview} icon={<Expand size={20} className="text-gray-600"/>}/>
                 <IconButton onClick={() =>{}} icon={<ShoppingCart size={20} className="text-gray-600"/>}/>
             </div>
         </div>

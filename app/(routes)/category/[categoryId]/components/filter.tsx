@@ -20,7 +20,7 @@ export const Filter: React.FC<FilterProps> = ({data, name, valueKey}) => {
 
     const onClick = (id: string) => {
         const current = queryString.parse(searchParams.toString());
-
+        
         const query = {
             ...current,
             [valueKey]: id
